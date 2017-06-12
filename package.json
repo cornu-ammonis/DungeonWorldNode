@@ -1,0 +1,22 @@
+{
+  "name": "dungeonworldnode",
+  "version": "1.0.0",
+  "description": "node.js app to track pc and npc stats and to help dm generate game components",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cornu-ammonis/DungeonWorldNode.git"
+  },
+  "author": "Andrew Jones",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cornu-ammonis/DungeonWorldNode/issues"
+  },
+  "homepage": "https://github.com/cornu-ammonis/DungeonWorldNode#readme",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
