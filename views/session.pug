@@ -5,5 +5,7 @@ html
 		h1= title
 
 		for pc in pcs
-			p int #{pc.int}
-			p wis #{pc.wis}
+			h3= pc.name
+			p <u>str</u> #{pc.str} int #{pc.int}
+			p dex #{pc.dex} wis #{pc.wis}
+			p con #{pc.con} cha #{pc.cha}
