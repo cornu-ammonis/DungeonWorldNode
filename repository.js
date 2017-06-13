@@ -14,9 +14,9 @@ module.exports = {
 		let path = "./data/sessionrosters/" + sessionTitle + "/roster.json";
 		if (this.fs.existsSync(path))
 		{
+			// load up current roster
 			try {
-			var characters = require("./data/sessionrosters/" + sessionTitle + "/roster.json");
-
+				var characters = require("./data/sessionrosters/" + sessionTitle + "/roster.json");
 			}
 			catch(e) // something else went wrong with finding the file
 			{
@@ -26,24 +26,28 @@ module.exports = {
 			
 			var alreadyExisted = false;
 
+			// check current characters for matched name
 			for (let i = 0; i < characters.length; i++) {
+
+				// name matched, update character
 				if (characters[i].name === character.name) {
 					characters[i] = character;
 					alreadyExisted = true;
 				}
+
 			}
 
+			// add character to list if it didnt exist
 			if (!alreadyExisted) {
 				characters.push(character);
 			}
 		}
 		// roster didnt already exist
 		else {
-
 			characters = [character];
 		}
 		
-
+		// write to disc
 		this.fs.writeFileSync("./data/sessionrosters/" + sessionTitle + "/roster.json", JSON.stringify(characters));
 	},
 
