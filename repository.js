@@ -28,6 +28,19 @@ module.exports = {
 		}
 
 		this.fs.writeFileSync("./data/sessionrosters/" + sessionTitle + "/roster.json", JSON.stringify(characters));
+	},
+
+	retrievePlayerCharactersForSession: function (sessionTitle)
+	{
+		try {
+			var characters = require("./data/sessionrosters/" + sessionTitle + "/roster.json");
+		}
+		catch (e)
+		{
+			var characters = [];
+		}
+
+		return characters;
 	}
 
 }
