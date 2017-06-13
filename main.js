@@ -68,7 +68,22 @@ app.get('createSession', function (req, res, next) {
 	res.render('session_form');
 });
 
+app.post('createSession', function (req, res, next) {
 
+	req.checkBody('name', 'session name required').notEmpty();
+
+	req.sanitize('name').escape();
+	req.sanitize('name').trim();
+
+	var errors = req.validationErrors();
+
+	let name = req.body.name;
+
+	if(errors) {
+		res.render('session_form', {name: name, errors: errors});
+		return;
+	}
+})
 
 let port = 3000;
 
