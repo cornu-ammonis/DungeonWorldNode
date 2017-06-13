@@ -98,8 +98,31 @@ app.post('/createSession', function (req, res) {
 app.get('/session/:sessionName/addCharacter', function (req, res) {
 	let sessionName = req.params['sessionName'];
 
-	res.render('character_form', {sessionName: sessionName});
+	res.render('character_form', {actionUrl: "/session/" + sessionName + "/addCharacter"});
 });
+
+app.post('/session/:sessionName/addCharacter', function (req, res) {
+	req.checkBody('name', 'session name required').notEmpty();
+
+	req.sanitize('name').escape();
+	req.sanitize('name').trim();
+
+	var errors = req.validationErrors();
+
+	let name = req.body.name;
+
+	if(errors) {
+		res.render('session_form', {name: name, errors: errors});
+		return;
+	}
+	else {
+		let pcConstructor = require('./models/pc.js');
+		let newPc = new pcConstructor(name, 1, 1, 2, 3, 21, 8, 13);
+		let sessionName = req.params['sessionName'];
+		repo.persistPlayerCharacterToSession(newPc, sessionName);
+		res.redirect('/session/' + sessionName);
+	}
+})
 
 let port = 3000;
 
