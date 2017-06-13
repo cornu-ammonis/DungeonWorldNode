@@ -10,28 +10,39 @@ module.exports = {
 	// @sessionTitle - string identifier for the session
 	persistPlayerCharacterToSession: function (character, sessionTitle) {
 
-		try{
+
+		let path = "./data/sessionrosters/" + sessionTitle + "/roster.json";
+		if (this.fs.existsSync(path))
+		{
+			try {
 			var characters = require("./data/sessionrosters/" + sessionTitle + "/roster.json");
 
-		}
-		catch(e)
-		{
-			characters = [];
-		}
-		
-		var alreadyExisted = false;
+			}
+			catch(e) // something else went wrong with finding the file
+			{
+				console.log(e.message);
+				return;
+			}
+			
+			var alreadyExisted = false;
 
-		for (let i = 0; i < characters.length; i++) {
-			if (characters[i].name === character.name) {
-				characters[i] = character;
-				alreadyExisted = true;
+			for (let i = 0; i < characters.length; i++) {
+				if (characters[i].name === character.name) {
+					characters[i] = character;
+					alreadyExisted = true;
+				}
+			}
+
+			if (!alreadyExisted) {
+				characters.push(character);
 			}
 		}
+		// roster didnt already exist
+		else {
 
-		if (!alreadyExisted)
-		{
-			characters.push(character);
+			characters = [character];
 		}
+		
 
 		this.fs.writeFileSync("./data/sessionrosters/" + sessionTitle + "/roster.json", JSON.stringify(characters));
 	},
