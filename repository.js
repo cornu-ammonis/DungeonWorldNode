@@ -53,12 +53,18 @@ module.exports = {
 
 	retrievePlayerCharactersForSession: function (sessionTitle)
 	{
-		try {
-			var characters = require("./data/sessionrosters/" + sessionTitle + "/roster.json");
-		}
-		catch (e)
-		{
-			var characters = [];
+		let path = "./data/sessionrosters/" + sessionTitle + "/roster.json";
+		let characters = []
+		
+		if (this.fs.existsSync(path)) {
+			try {
+				characters = require(path);
+			}
+			catch (e)
+			{
+				console.log(e.message);
+				console.log(e.stack);
+			}
 		}
 
 		return characters;
