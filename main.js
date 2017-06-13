@@ -16,7 +16,7 @@ app.use(expressValidator()); // Add this after the bodyParser middlewares!
 
 //let sessions = require('./data/sessions.json');
 
-
+/*
 let pcConstructor = require('./models/pc.js');
 let sessionTitle = "testSession";
 
@@ -25,7 +25,7 @@ let test1 = new pcConstructor("dargon", 1, 1, 2, 3, 21, 8, 13);
 repo.persistPlayerCharacterToSession(test1, sessionTitle);
 let test2 = new pcConstructor("elf", 6, 5, 4, 3, 2, 1, 8);
 repo.persistPlayerCharacterToSession(test2, sessionTitle);
-//let characters = [test1, test2];
+//let characters = [test1, test2]; */
 
 app.get('/', function (req, res) {
 	let characters = repo.retrievePlayerCharactersForSession(sessionTitle);
@@ -51,10 +51,10 @@ app.get('/session/:sessionName', function (req, res) {
 	}
 
 	if (validSession) {
-		let characters = repo.retrievePlayerCharactersForSession(sessionTitle);
+		let characters = repo.retrievePlayerCharactersForSession(sessionName);
 
 		res.render("session", {
-			title: "your session",
+			title: sessionName,
 			pcs: characters
 		});
 	}
@@ -66,7 +66,7 @@ app.get('/session/:sessionName', function (req, res) {
 });
 
 app.get('/createSession', function (req, res) {
-	res.render('session_form');
+	res.render('session_form', {title: "enter a name for your session"});
 });
 
 app.post('/createSession', function (req, res) {
