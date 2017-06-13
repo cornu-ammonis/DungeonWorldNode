@@ -27,6 +27,11 @@ app.get('/', function (req, res) {
 	})
 });
 
+app.get('/session/:sessionName', function (req, res) {
+	let sessionName = req.params['sessionName'];
+	res.send(sessionName);
+
+});
 
 let port = 3000;
 
