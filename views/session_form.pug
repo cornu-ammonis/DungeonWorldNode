@@ -5,13 +5,13 @@ html
 		h1= title
 
 
-	form(method='POST' action='')
-	    div.form-group
-	      label(for='name')
-	      input#name.form-control(type='text')
-	    button.btn.btn-primary(type='submit') Submit
+		form(method='POST' action='')
+			div.form-group
+				label(for='name')
+				input#name.form-control(type='text', name='name')
+			button.btn.btn-primary(type='submit') Submit
 
-	  if errors 
-	    ul
-	      for error in errors
-	        li!= error.msg
+		if errors 
+			ul
+				for error in errors
+					li!= error.msg
