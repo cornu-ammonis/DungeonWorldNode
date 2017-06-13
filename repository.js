@@ -51,6 +51,11 @@ module.exports = {
 		this.fs.writeFileSync("./data/sessionrosters/" + sessionTitle + "/roster.json", JSON.stringify(characters));
 	},
 
+	// retrieves an array of pc objects by deserializing the json file 
+	// found under sessionTitle. returns an empty array if no file is found.
+	//
+	// @param sessionTitle - string uniquely identifying session to retrieve
+	// @returns - array of pc or empty array if roster not found
 	retrievePlayerCharactersForSession: function (sessionTitle)
 	{
 		let path = "./data/sessionrosters/" + sessionTitle + "/roster.json";
