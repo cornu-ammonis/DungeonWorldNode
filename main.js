@@ -6,6 +6,14 @@ app.set('view engine', 'pug');
 
 const repo = require('./repository');
 
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var expressValidator = require('express-validator');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressValidator()); // Add this after the bodyParser middlewares!
+
 //let sessions = require('./data/sessions.json');
 
 
