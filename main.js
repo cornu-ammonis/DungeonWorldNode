@@ -6,7 +6,7 @@ app.set('view engine', 'pug');
 
 const repo = require('./repository');
 
-var cookieParser = require('cookie-parser');
+//var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
 
@@ -65,11 +65,11 @@ app.get('/session/:sessionName', function (req, res) {
  
 });
 
-app.get('createSession', function (req, res) {
+app.get('/createSession', function (req, res) {
 	res.render('session_form');
 });
 
-app.post('createSession', function (req, res) {
+app.post('/createSession', function (req, res) {
 
 	req.checkBody('name', 'session name required').notEmpty();
 
