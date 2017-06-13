@@ -38,6 +38,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/session/:sessionName', function (req, res) {
+	
 	let sessionName = req.params['sessionName'];
 	let sessions = repo.retrieveSessionNames();
 	
@@ -84,6 +85,17 @@ app.post('createSession', function (req, res) {
 		return;
 	}
 	else {
+		let sessions = repo.retrieveSessionNames();
+
+		for (let i = 0; i < sessions.length; i++) {
+			if (sessions[i] === name) {
+				res.render('session_form', {name: name, errors: "session name already taken"});
+				return;
+			}
+		}
+
+		repo.persistNewSessionName(name);
+		res.redirect('/session/' + name);
 
 	}
 })
