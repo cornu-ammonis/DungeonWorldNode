@@ -17,13 +17,8 @@ repo.persistPlayerCharacterToSession(test1, sessionTitle);
 //let test2 = new pcConstructor("elf", 6, 5, 4, 3, 2, 1, 8);
 //let characters = [test1, test2];
 
-
-
-//fs.writeFileSync("./data/sessionrosters/" + sessionTitle + "/roster.json", JSON.stringify(characters));
-
-let characters = require("./data/sessionrosters/" + sessionTitle + "/roster.json");
-
 app.get('/', function (req, res) {
+	let characters = repo.retrievePlayerCharactersForSession(sessionTitle);
 	//res.send('Hello World!');
 	//res.send(JSON.stringify(test) + " " + JSON.stringify(test2) + JSON.stringify(sessions));
 	res.render("session", {
