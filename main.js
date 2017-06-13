@@ -28,13 +28,8 @@ repo.persistPlayerCharacterToSession(test2, sessionTitle);
 //let characters = [test1, test2]; */
 
 app.get('/', function (req, res) {
-	let characters = repo.retrievePlayerCharactersForSession(sessionTitle);
-	//res.send('Hello World!');
-	//res.send(JSON.stringify(test) + " " + JSON.stringify(test2) + JSON.stringify(sessions));
-	res.render("session", {
-		title: "your session",
-		pcs: characters
-	})
+	
+	res.render("index", {title: "Dungeon World"});
 });
 
 app.get('/session/:sessionName', function (req, res) {
