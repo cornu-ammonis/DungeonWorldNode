@@ -64,6 +64,12 @@ app.get('/session/:sessionName', function (req, res) {
  
 });
 
+app.get('createSession', function (req, res, next) {
+	res.render('session_form');
+});
+
+
+
 let port = 3000;
 
 app.listen(port, function() {
