@@ -4,20 +4,23 @@ const express = require('express');
 const app = express();
 app.set('view engine', 'pug');
 
-const fs = require('fs.extra');
+const repo = require('./repository');
+
 let sessions = require('./data/sessions.json');
 
 
 let pcConstructor = require('./models/pc.js');
-/*
-let test1 = new pcConstructor("dargon", 1, 2, 3, 4, 5, 6);
-let test2 = new pcConstructor("elf", 6, 5, 4, 3, 2, 1);
-let characters = [test1, test2];
-
-
-
-fs.writeFileSync("./data/sessionrosters/" + sessionTitle + "/roster.json", JSON.stringify(characters));*/
 let sessionTitle = "testSession";
+
+let test1 = new pcConstructor("dargon", 1, 1, 2, 3, 21, 8, 13);
+repo.persistPlayerCharacterToSession(test1, sessionTitle);
+//let test2 = new pcConstructor("elf", 6, 5, 4, 3, 2, 1, 8);
+//let characters = [test1, test2];
+
+
+
+//fs.writeFileSync("./data/sessionrosters/" + sessionTitle + "/roster.json", JSON.stringify(characters));
+
 let characters = require("./data/sessionrosters/" + sessionTitle + "/roster.json");
 
 app.get('/', function (req, res) {
