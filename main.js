@@ -95,6 +95,12 @@ app.post('/createSession', function (req, res) {
 	}
 })
 
+app.get('/session/:sessionName/addCharacter', function (req, res) {
+	let sessionName = req.params['sessionName'];
+
+	res.render('character_form', {sessionName: sessionName});
+});
+
 let port = 3000;
 
 app.listen(port, function() {
