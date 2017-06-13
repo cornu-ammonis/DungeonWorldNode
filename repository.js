@@ -12,8 +12,7 @@ module.exports = {
 
 
 		let path = "./data/sessionrosters/" + sessionTitle + "/roster.json";
-		if (this.fs.existsSync(path))
-		{
+		if (this.fs.existsSync(path)) {
 			// load up current roster
 			try {
 				var characters = require("./data/sessionrosters/" + sessionTitle + "/roster.json");
@@ -56,8 +55,8 @@ module.exports = {
 	//
 	// @param sessionTitle - string uniquely identifying session to retrieve
 	// @returns - array of pc or empty array if roster not found
-	retrievePlayerCharactersForSession: function (sessionTitle)
-	{
+	retrievePlayerCharactersForSession: function (sessionTitle) {
+		
 		let path = "./data/sessionrosters/" + sessionTitle + "/roster.json";
 		let characters = []
 		
@@ -73,6 +72,11 @@ module.exports = {
 		}
 
 		return characters;
+	},
+
+	retrieveSessionNames: function ()
+	{
+
 	}
 
 }
