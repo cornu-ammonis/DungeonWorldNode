@@ -74,9 +74,25 @@ module.exports = {
 		return characters;
 	},
 
-	retrieveSessionNames: function ()
-	{
 
+	retrieveSessionNames: function () {
+
+		var sessions = [];
+		if (this.fs.existsSync("./data/sessions.json")) {
+
+			try {
+				sessions = require('./data/sessions.json');
+			}
+			catch (e) {
+				console.log(e.message);
+				console.log(e.stack);
+			}	
+		}
+		else {
+			console.log("session.json not found");
+		}
+		
+		return sessions;
 	}
 
 }
