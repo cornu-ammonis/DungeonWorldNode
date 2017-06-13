@@ -1,25 +1,33 @@
 module.exports = {
 
 	fs: require('fs.extra'),
-	
+
 	persistPlayerCharacterToSession: function (character, sessionTitle) {
 
-		let characters = require("./data/sessionrosters/" + sessionTitle + "/roster.json");
-		let alreadyExisted = false;
+		try{
+			var characters = require("./data/sessionrosters/" + sessionTitle + "/roster.json");
 
-		for (currentCharacter in characters) {
-			if (currentCharacter.name === character.name) {
-				currentCharacter = character;
-				alreadyExited = true;
+		}
+		catch(e)
+		{
+			characters = [];
+		}
+		
+		var alreadyExisted = false;
+
+		for (let i = 0; i < characters.length; i++) {
+			if (characters[i].name === character.name) {
+				characters[i] = character;
+				alreadyExisted = true;
 			}
 		}
 
 		if (!alreadyExisted)
 		{
-			characters.append(character);
+			characters.push(character);
 		}
 
-		fs.writeFileSync("./data/sessionrosters/" + sessionTitle + "/roster.json", JSON.stringify(characters));
+		this.fs.writeFileSync("./data/sessionrosters/" + sessionTitle + "/roster.json", JSON.stringify(characters));
 	}
 
 }
