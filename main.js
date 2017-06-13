@@ -64,11 +64,11 @@ app.get('/session/:sessionName', function (req, res) {
  
 });
 
-app.get('createSession', function (req, res, next) {
+app.get('createSession', function (req, res) {
 	res.render('session_form');
 });
 
-app.post('createSession', function (req, res, next) {
+app.post('createSession', function (req, res) {
 
 	req.checkBody('name', 'session name required').notEmpty();
 
@@ -82,6 +82,9 @@ app.post('createSession', function (req, res, next) {
 	if(errors) {
 		res.render('session_form', {name: name, errors: errors});
 		return;
+	}
+	else {
+
 	}
 })
 
