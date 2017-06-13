@@ -35,6 +35,7 @@ app.get('/', function (req, res) {
 app.get('/session/:sessionName', function (req, res) {
 	
 	let sessionName = req.params['sessionName'];
+	let addCharacterUrl = '/session/' + sessionName + '/addCharacter';
 	let sessions = repo.retrieveSessionNames();
 	
 	let validSession = false;
@@ -50,7 +51,8 @@ app.get('/session/:sessionName', function (req, res) {
 
 		res.render("session", {
 			title: sessionName,
-			pcs: characters
+			pcs: characters,
+			addCharacterUrl: addCharacterUrl
 		});
 	}
 	else {
