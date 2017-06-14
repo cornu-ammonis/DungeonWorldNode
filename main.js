@@ -35,9 +35,7 @@ app.get('/', controller.index);
 // displays characters present in session identified by :sessionName parameter
 app.get('/session/:sessionName', controller.retrieveSessionByName);
 
-app.get('/createSession', function (req, res) {
-	res.render('session_form', {title: "enter a name for your session"});
-});
+app.get('/createSession', controller.createSessionGet);
 
 app.post('/createSession', controller.createSessionPost);
 

@@ -33,6 +33,10 @@ exports.retrieveSessionByName = function (req, res) {
 	}
 }
 
+exports.createSessionGet = function (req, res) {
+	res.render('session_form', {title: "enter a name for your session"});
+}
+
 exports.createSessionPost = function (req, res) {
 	req.checkBody('name', 'session name required').notEmpty();
 
