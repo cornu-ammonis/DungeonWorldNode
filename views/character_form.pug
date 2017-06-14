@@ -13,8 +13,8 @@ html
 				label(for='str') STR:
 				input#str.form-control(type='text', name='str' value=(undefined===str ? '' : str))
 
-				label(for = 'int') INTL
-				intput#int.form-control(type='text', name='int', value=(undefined===int ? '' : int))
+				label(for = 'int') INT:
+				input#int.form-control(type='text', name='int', value=(undefined===int ? '' : int))
 			button.btn.btn-primary(type='submit') Submit
 
 		if errors 
