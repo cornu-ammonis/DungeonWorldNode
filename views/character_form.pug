@@ -1,0 +1,57 @@
+html 
+	head
+		title= title
+	body
+		h1= title
+
+
+		form(method='POST' action= actionUrl)
+			div.form-group
+				p
+					label(for='name') Character Name
+					br 
+					input#name.form-control(type='text', name='name', value=(undefined===name ? '' : name))
+					
+
+				p 
+					label(for='str') STR
+					br
+					input#str.form-control(type='text', name='str' value=(undefined===str ? '' : str))
+
+				p 
+					label(for = 'int') INT
+					br
+					input#int.form-control(type='text', name='int', value=(undefined===int ? '' : int))
+
+				p
+					label(for = 'dex') DEX
+					br
+					input#dex.form-control(type='text', name='dex', value=(undefined===dex ? '' : dex))
+
+				p
+					label(for = 'wis') WIS
+					br
+					input#wis.form-control(type='text', name='wis', value=(undefined===wis ? '' : wis))
+
+				p
+					label(for = 'con') CON
+					br
+					input#con.form-control(type='text', name='con', value=(undefined===con ? '' : con))
+
+				p
+					label(for = 'CHA') CHA
+					br
+					input#cha.form-control(type='text', name='cha', value=(undefined===cha ? '' : cha))
+
+				p 
+					label(for = 'basehp') Base Hp (your max hp is con plus this number)
+					br
+					input#basehp.form-control(type='text', name='basehp', value=(undefined===basehp ? '' : basehp))
+
+				button.btn.btn-primary(type='submit') Submit
+
+
+		if errors 
+			ul
+				for error in errors
+					li!= error.msg

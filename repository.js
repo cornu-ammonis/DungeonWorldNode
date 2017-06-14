@@ -93,6 +93,15 @@ module.exports = {
 		}
 		
 		return sessions;
+	}, 
+
+	persistNewSessionName: function (name) {
+		let sessions = this.retrieveSessionNames();
+
+		sessions.push(name);
+
+		this.fs.writeFileSync("./data/sessions.json", JSON.stringify(sessions));
+		this.fs.mkdir('./data/sessionrosters/' + name + '/');
 	}
 
 }
