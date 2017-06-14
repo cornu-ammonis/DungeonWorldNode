@@ -43,11 +43,7 @@ app.get('/createSession', function (req, res) {
 
 app.post('/createSession', controller.createSession);
 
-app.get('/session/:sessionName/addCharacter', function (req, res) {
-	let sessionName = req.params['sessionName'];
-
-	res.render('character_form', {actionUrl: "/session/" + sessionName + "/addCharacter"});
-});
+app.get('/session/:sessionName/addCharacter', controller.addCharacterGet);
 
 // POST for character creation form
 app.post('/session/:sessionName/addCharacter', function (req, res) {
