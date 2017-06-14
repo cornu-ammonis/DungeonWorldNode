@@ -27,6 +27,7 @@ let test2 = new pcConstructor("elf", 6, 5, 4, 3, 2, 1, 8);
 repo.persistPlayerCharacterToSession(test2, sessionTitle);
 //let characters = [test1, test2]; */
 
+// home page; includes links to creating and opening a session 
 app.get('/', function (req, res) {
 	
 	res.render("index", {title: "Dungeon World"});
@@ -106,16 +107,20 @@ app.get('/session/:sessionName/addCharacter', function (req, res) {
 app.post('/session/:sessionName/addCharacter', function (req, res) {
 	req.checkBody('name', 'session name required. must be alphanumeric').notEmpty().isAlphanumeric();
 	req.checkBody('str', 'str required. must be an integer.').notEmpty().isInt();
+	req.checkBody('int', 'int required. must be an integer.').notEmpty().isInt();
 
 	req.sanitize('name').escape();
 	req.sanitize('name').trim();
 	req.sanitize('str').escape();
 	req.sanitize('str').trim();
+	req.sanitize('int').escape();
+	req.sanitize('int').trim();
 
 	var errors = req.validationErrors();
 
 	let name = req.body.name;
 	let str = req.body.str;
+	let int = req.body.int;
 
 	if(errors) {
 		res.render('character_form', {name: name, str: str, errors: errors});
@@ -124,7 +129,7 @@ app.post('/session/:sessionName/addCharacter', function (req, res) {
 	else {
 		str = parseInt(str);
 		let pcConstructor = require('./models/pc.js');
-		let newPc = new pcConstructor(name, str, str, str, str, str, str, str);
+		let newPc = new pcConstructor(name, str, int, str, str, str, str, str);
 		let sessionName = req.params['sessionName'];
 		repo.persistPlayerCharacterToSession(newPc, sessionName);
 		res.redirect('/session/' + sessionName);
