@@ -112,6 +112,7 @@ app.post('/session/:sessionName/addCharacter', function (req, res) {
 	req.checkBody('wis', 'wis required. must be an integer.').notEmpty().isInt();
 	req.checkBody('con', 'con required. must be an integer.').notEmpty().isInt();
 	req.checkBody('cha', 'cha required. must be an integer.').notEmpty().isInt();
+	req.checkBody('basehp', 'base hp required. must be an integer.').notEmpty().isInt();
 
 
 	req.sanitize('name').escape();
@@ -134,6 +135,9 @@ app.post('/session/:sessionName/addCharacter', function (req, res) {
 
 	req.sanitize('cha').escape();
 	req.sanitize('cha').trim();
+	
+	req.sanitize('basehp').escape();
+	req.sanitize('basehp').trim();
 
 	var errors = req.validationErrors();
 
@@ -144,16 +148,17 @@ app.post('/session/:sessionName/addCharacter', function (req, res) {
 	let wis = req.body.wis;
 	let con = req.body.con;
 	let cha = req.body.cha;
+	let basehp = req.body.basehp;
 
 	if(errors) {
-		res.render('character_form', {name: name, str: str, int: int, dex: dex, wis: wis, con:con, cha:cha,
+		res.render('character_form', {name: name, str: str, int: int, dex: dex, wis: wis, con: con, cha: cha, basehp: basehp
 			 errors: errors});
 		return;
 	}
 	else {
 		str = parseInt(str);
 		let pcConstructor = require('./models/pc.js');
-		let newPc = new pcConstructor(name, str, int, dex, wis, con, cha, baseHp);
+		let newPc = new pcConstructor(name, str, int, dex, wis, con, cha, basehp);
 		let sessionName = req.params['sessionName'];
 		repo.persistPlayerCharacterToSession(newPc, sessionName);
 		res.redirect('/session/' + sessionName);
