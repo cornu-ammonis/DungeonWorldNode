@@ -108,19 +108,39 @@ app.post('/session/:sessionName/addCharacter', function (req, res) {
 	req.checkBody('name', 'session name required. must be alphanumeric').notEmpty().isAlphanumeric();
 	req.checkBody('str', 'str required. must be an integer.').notEmpty().isInt();
 	req.checkBody('int', 'int required. must be an integer.').notEmpty().isInt();
+	req.checkBody('dex', 'dex required. must be an integer.').notEmpty().isInt();
+	req.checkBody('wis', 'wis required. must be an integer.').notEmpty().isInt();
+	req.checkBody('con', 'con required. must be an integer.').notEmpty().isInt();
+	req.checkBody('cha', 'cha required. must be an integer.').notEmpty().isInt();
+
 
 	req.sanitize('name').escape();
 	req.sanitize('name').trim();
+	
 	req.sanitize('str').escape();
 	req.sanitize('str').trim();
+	
 	req.sanitize('int').escape();
 	req.sanitize('int').trim();
+	
+	req.sanitize('dex').escape();
+	req.sanitize('dex').trim();
+	
+	req.sanitize('wis').escape();
+	req.sanitize('wis').trim();
+	
+	req.sanitize('con').escape();
+	req.sanitize('con').trim();
+
+	req.sanitize('cha').escape();
+	req.sanitize('cha').trim();
 
 	var errors = req.validationErrors();
 
 	let name = req.body.name;
 	let str = req.body.str;
 	let int = req.body.int;
+	
 
 	if(errors) {
 		res.render('character_form', {name: name, str: str, errors: errors});
