@@ -2,9 +2,10 @@
 
 const express = require('express');
 const app = express();
+var controller = require('./controller.js');
 app.set('view engine', 'pug');
 
-const repo = require('./repository');
+
 
 //var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -33,35 +34,7 @@ app.get('/', function (req, res) {
 	res.render("index", {title: "Dungeon World"});
 });
 
-app.get('/session/:sessionName', function (req, res) {
-	
-	let sessionName = req.params['sessionName'];
-	let addCharacterUrl = '/session/' + sessionName + '/addCharacter';
-	let sessions = repo.retrieveSessionNames();
-	
-	let validSession = false;
-
-	for (let i = 0; i < sessions.length; i++){
-		if (sessions[i] === sessionName) {
-			validSession = true;
-		}
-	}
-
-	if (validSession) {
-		let characters = repo.retrievePlayerCharactersForSession(sessionName);
-
-		res.render("session", {
-			title: sessionName,
-			pcs: characters,
-			addCharacterUrl: addCharacterUrl
-		});
-	}
-	else {
-		console.log(sessions);
-		res.send("session not found.");
-	}
- 
-});
+app.get('/session/:sessionName', controller.retrieveSessionByName);
 
 app.get('/createSession', function (req, res) {
 	res.render('session_form', {title: "enter a name for your session"});
