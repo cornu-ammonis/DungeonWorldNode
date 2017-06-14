@@ -1,5 +1,10 @@
 const repo = require('./repository');
 
+
+exports.index = function (req, res) {
+	res.render("index", {title: "Dungeon World"});
+}
+
 exports.retrieveSessionByName = function (req, res) {
 	let sessionName = req.params['sessionName'];
 	let addCharacterUrl = '/session/' + sessionName + '/addCharacter';
