@@ -3,7 +3,7 @@ html
 		title= title
 	body
 		h1= title
-
+		a(href= addCharacterUrl) add a character
 		for pc in pcs
 			h2= pc.name
 			<h4> HP: #{pc.currenthp} / #{pc.maxhp} </h4>
