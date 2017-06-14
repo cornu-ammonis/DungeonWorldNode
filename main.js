@@ -30,10 +30,7 @@ repo.persistPlayerCharacterToSession(test2, sessionTitle);
 //let characters = [test1, test2]; */
 
 // home page; includes links to creating and opening a session 
-app.get('/', function (req, res) {
-	
-	res.render("index", {title: "Dungeon World"});
-});
+app.get('/', controller.index);
 
 app.get('/session/:sessionName', controller.retrieveSessionByName);
 
