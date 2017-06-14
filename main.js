@@ -35,10 +35,13 @@ app.get('/', controller.index);
 // displays characters present in session identified by :sessionName parameter
 app.get('/session/:sessionName', controller.retrieveSessionByName);
 
+// gets form for creation of new session
 app.get('/createSession', controller.createSessionGet);
 
+// attemts to create new session using user provided session name
 app.post('/createSession', controller.createSessionPost);
 
+// displays input form for creation of new character for specified session
 app.get('/session/:sessionName/addCharacter', controller.addCharacterGet);
 
 // POST for character creation form
