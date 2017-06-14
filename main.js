@@ -2,6 +2,7 @@
 
 const express = require('express');
 const app = express();
+const repo = require('./repository');
 var controller = require('./controller.js');
 app.set('view engine', 'pug');
 
@@ -40,36 +41,7 @@ app.get('/createSession', function (req, res) {
 	res.render('session_form', {title: "enter a name for your session"});
 });
 
-app.post('/createSession', function (req, res) {
-
-	req.checkBody('name', 'session name required').notEmpty();
-
-	req.sanitize('name').escape();
-	req.sanitize('name').trim();
-
-	var errors = req.validationErrors();
-
-	let name = req.body.name;
-
-	if(errors) {
-		res.render('session_form', {name: name, errors: errors, message: ''});
-		return;
-	}
-	else {
-		let sessions = repo.retrieveSessionNames();
-
-		for (let i = 0; i < sessions.length; i++) {
-			if (sessions[i] === name) {
-				res.render('session_form', {name: name, message: "session name already taken", title: "enter a name for your session"});
-				return;
-			}
-		}
-
-		repo.persistNewSessionName(name);
-		res.redirect('/session/' + name);
-
-	}
-})
+app.post('/createSession', controller.createSession);
 
 app.get('/session/:sessionName/addCharacter', function (req, res) {
 	let sessionName = req.params['sessionName'];
