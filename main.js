@@ -104,22 +104,27 @@ app.get('/session/:sessionName/addCharacter', function (req, res) {
 });
 
 app.post('/session/:sessionName/addCharacter', function (req, res) {
-	req.checkBody('name', 'session name required').notEmpty();
+	req.checkBody('name', 'session name required. must be alphanumeric').notEmpty().isAlphanumeric();
+	req.checkBody('str', 'str required. must be an integer.').notEmpty().isInt();
 
 	req.sanitize('name').escape();
 	req.sanitize('name').trim();
+	req.sanitize('str').escape();
+	req.sanitize('str').trim();
 
 	var errors = req.validationErrors();
 
 	let name = req.body.name;
+	let str = req.body.str;
 
 	if(errors) {
-		res.render('session_form', {name: name, errors: errors});
+		res.render('character_form', {name: name, str: str, errors: errors});
 		return;
 	}
 	else {
+		str = parseInt(str);
 		let pcConstructor = require('./models/pc.js');
-		let newPc = new pcConstructor(name, 1, 1, 2, 3, 21, 8, 13);
+		let newPc = new pcConstructor(name, str, str, str, str, str, str, str);
 		let sessionName = req.params['sessionName'];
 		repo.persistPlayerCharacterToSession(newPc, sessionName);
 		res.redirect('/session/' + sessionName);
