@@ -9,7 +9,7 @@ html
 		form(method='POST' action='')
 			div.form-group
 				label(for='name') Session Name:
-				input#name.form-control(type='text', name='name')
+				input#name.form-control(type='text', name='name', value=(undefined===name ? '' : name))
 			button.btn.btn-primary(type='submit') Submit
 
 		if errors 
