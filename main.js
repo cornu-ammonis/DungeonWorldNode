@@ -143,21 +143,32 @@ app.post('/session/:sessionName/addCharacter', function (req, res) {
 	var errors = req.validationErrors();
 
 	let name = req.body.name;
-	let str = req.body.str;
-	let int = req.body.int;
-	let dex = req.body.dex;
-	let wis = req.body.wis;
-	let con = req.body.con;
-	let cha = req.body.cha;
-	let basehp = req.body.basehp;
+	
 
 	if(errors) {
+
+		let str = req.body.str;
+		let int = req.body.int;
+		let dex = req.body.dex;
+		let wis = req.body.wis;
+		let con = req.body.con;
+		let cha = req.body.cha;
+		let basehp = req.body.basehp;
+		
 		res.render('character_form', {name: name, str: str, int: int, dex: dex, wis: wis, con: con, cha: cha, basehp: basehp, 
 			errors: errors});
 		return;
 	}
 	else {
-		str = parseInt(str);
+		
+		let str = parseInt(req.body.str);
+		let int = parseInt(req.body.int);
+		let dex = parseInt(req.body.dex);
+		let wis = parseInt(req.body.wis);
+		let con = parseInt(req.body.con);
+		let cha = parseInt(req.body.cha);
+		let basehp = parseInt(req.body.basehp);
+
 		let pcConstructor = require('./models/pc.js');
 		let newPc = new pcConstructor(name, str, int, dex, wis, con, cha, basehp);
 		let sessionName = req.params['sessionName'];
