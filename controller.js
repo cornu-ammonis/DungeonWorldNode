@@ -51,7 +51,7 @@ exports.createSessionGet = function (req, res) {
 // attempts to create a new session using a string of user input. the string
 // should uniquely identify the session. 
 exports.createSessionPost = function (req, res) {
-	req.checkBody('name', 'session name required').notEmpty();
+	req.checkBody('name', 'session name required, must be alphanumeric').notEmpty().isAlphaNumeric();
 
 	req.sanitize('name').escape();
 	req.sanitize('name').trim();
