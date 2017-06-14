@@ -2,9 +2,11 @@
 
 const express = require('express');
 const app = express();
+const repo = require('./repository');
+var controller = require('./controller.js');
 app.set('view engine', 'pug');
 
-const repo = require('./repository');
+
 
 //var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -28,172 +30,22 @@ repo.persistPlayerCharacterToSession(test2, sessionTitle);
 //let characters = [test1, test2]; */
 
 // home page; includes links to creating and opening a session 
-app.get('/', function (req, res) {
-	
-	res.render("index", {title: "Dungeon World"});
-});
+app.get('/', controller.index);
 
-app.get('/session/:sessionName', function (req, res) {
-	
-	let sessionName = req.params['sessionName'];
-	let addCharacterUrl = '/session/' + sessionName + '/addCharacter';
-	let sessions = repo.retrieveSessionNames();
-	
-	let validSession = false;
+// displays characters present in session identified by :sessionName parameter
+app.get('/session/:sessionName', controller.retrieveSessionByName);
 
-	for (let i = 0; i < sessions.length; i++){
-		if (sessions[i] === sessionName) {
-			validSession = true;
-		}
-	}
+// gets form for creation of new session
+app.get('/createSession', controller.createSessionGet);
 
-	if (validSession) {
-		let characters = repo.retrievePlayerCharactersForSession(sessionName);
+// attemts to create new session using user provided session name
+app.post('/createSession', controller.createSessionPost);
 
-		res.render("session", {
-			title: sessionName,
-			pcs: characters,
-			addCharacterUrl: addCharacterUrl
-		});
-	}
-	else {
-		console.log(sessions);
-		res.send("session not found.");
-	}
- 
-});
-
-app.get('/createSession', function (req, res) {
-	res.render('session_form', {title: "enter a name for your session"});
-});
-
-app.post('/createSession', function (req, res) {
-
-	req.checkBody('name', 'session name required').notEmpty();
-
-	req.sanitize('name').escape();
-	req.sanitize('name').trim();
-
-	var errors = req.validationErrors();
-
-	let name = req.body.name;
-
-	if(errors) {
-		res.render('session_form', {name: name, errors: errors, message: ''});
-		return;
-	}
-	else {
-		let sessions = repo.retrieveSessionNames();
-
-		for (let i = 0; i < sessions.length; i++) {
-			if (sessions[i] === name) {
-				res.render('session_form', {name: name, message: "session name already taken", title: "enter a name for your session"});
-				return;
-			}
-		}
-
-		repo.persistNewSessionName(name);
-		res.redirect('/session/' + name);
-
-	}
-})
-
-app.get('/session/:sessionName/addCharacter', function (req, res) {
-	let sessionName = req.params['sessionName'];
-
-	res.render('character_form', {actionUrl: "/session/" + sessionName + "/addCharacter"});
-});
+// displays input form for creation of new character for specified session
+app.get('/session/:sessionName/addCharacter', controller.addCharacterGet);
 
 // POST for character creation form
-app.post('/session/:sessionName/addCharacter', function (req, res) {
-
-	// check all fields populated
-	req.checkBody('name', 'character name required. must be alphanumeric').notEmpty().isAlphanumeric();
-	req.checkBody('str', 'str required. must be an integer.').notEmpty().isInt();
-	req.checkBody('int', 'int required. must be an integer.').notEmpty().isInt();
-	req.checkBody('dex', 'dex required. must be an integer.').notEmpty().isInt();
-	req.checkBody('wis', 'wis required. must be an integer.').notEmpty().isInt();
-	req.checkBody('con', 'con required. must be an integer.').notEmpty().isInt();
-	req.checkBody('cha', 'cha required. must be an integer.').notEmpty().isInt();
-	req.checkBody('basehp', 'base hp required. must be an integer.').notEmpty().isInt();
-
-
-	// sanitize each field
-	
-	req.sanitize('name').escape();
-	req.sanitize('name').trim();
-	
-	req.sanitize('str').escape();
-	req.sanitize('str').trim();
-	
-	req.sanitize('int').escape();
-	req.sanitize('int').trim();
-	
-	req.sanitize('dex').escape();
-	req.sanitize('dex').trim();
-	
-	req.sanitize('wis').escape();
-	req.sanitize('wis').trim();
-	
-	req.sanitize('con').escape();
-	req.sanitize('con').trim();
-
-	req.sanitize('cha').escape();
-	req.sanitize('cha').trim();
-	
-	req.sanitize('basehp').escape();
-	req.sanitize('basehp').trim();
-
-
-	// generate errors
-	var errors = req.validationErrors();
-
-	// name will always be parsed as string
-	let name = req.body.name;
-	
-
-	if(errors) {
-
-		// parse stats as strings in case of failure to input integer
-		let str = req.body.str;
-		let int = req.body.int;
-		let dex = req.body.dex;
-		let wis = req.body.wis;
-		let con = req.body.con;
-		let cha = req.body.cha;
-		let basehp = req.body.basehp;
-
-		res.render('character_form', {name: name, str: str, int: int, dex: dex, wis: wis, con: con, cha: cha, basehp: basehp, 
-			errors: errors});
-		return;
-	}
-	else {
-		
-		// can safely parse stats as strings because there were no errors
-		let str = parseInt(req.body.str);
-		let int = parseInt(req.body.int);
-		let dex = parseInt(req.body.dex);
-		let wis = parseInt(req.body.wis);
-		let con = parseInt(req.body.con);
-		let cha = parseInt(req.body.cha);
-		let basehp = parseInt(req.body.basehp);
-
-		// inport constructor for player character class
-		let pcConstructor = require('./models/pc.js');
-		
-		// create new character
-		let newPc = new pcConstructor(name, str, int, dex, wis, con, cha, basehp);
-		
-		// determine session to which to add character based on url parameter
-		let sessionName = req.params['sessionName'];
-
-		// commit to disc
-		repo.persistPlayerCharacterToSession(newPc, sessionName);
-		
-		// returns to session home page
-		res.redirect('/session/' + sessionName);
-	}
-})
+app.post('/session/:sessionName/addCharacter', controller.addCharacterPost);
 
 let port = 3000;
 
