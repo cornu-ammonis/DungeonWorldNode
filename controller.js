@@ -57,3 +57,9 @@ exports.createSession = function (req, res) {
 
 	}
 }
+
+exports.addCharacterGet = function (req, res) {
+	let sessionName = req.params['sessionName'];
+
+	res.render('character_form', {actionUrl: "/session/" + sessionName + "/addCharacter"});
+}
