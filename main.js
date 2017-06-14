@@ -79,7 +79,7 @@ app.post('/createSession', function (req, res) {
 	let name = req.body.name;
 
 	if(errors) {
-		res.render('session_form', {name: name, errors: errors});
+		res.render('session_form', {name: name, errors: errors, message: ''});
 		return;
 	}
 	else {
@@ -87,7 +87,7 @@ app.post('/createSession', function (req, res) {
 
 		for (let i = 0; i < sessions.length; i++) {
 			if (sessions[i] === name) {
-				res.render('session_form', {name: name, errors: "session name already taken"});
+				res.render('session_form', {name: name, message: "session name already taken", title: "enter a name for your session"});
 				return;
 			}
 		}
@@ -117,6 +117,7 @@ app.post('/session/:sessionName/addCharacter', function (req, res) {
 	req.checkBody('cha', 'cha required. must be an integer.').notEmpty().isInt();
 	req.checkBody('basehp', 'base hp required. must be an integer.').notEmpty().isInt();
 
+
 	// sanitize each field
 	
 	req.sanitize('name').escape();
@@ -142,6 +143,7 @@ app.post('/session/:sessionName/addCharacter', function (req, res) {
 	
 	req.sanitize('basehp').escape();
 	req.sanitize('basehp').trim();
+
 
 	// generate errors
 	var errors = req.validationErrors();
