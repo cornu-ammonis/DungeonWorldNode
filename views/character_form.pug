@@ -22,7 +22,26 @@ html
 					label(for = 'int') INT
 					br
 					input#int.form-control(type='text', name='int', value=(undefined===int ? '' : int))
-			button.btn.btn-primary(type='submit') Submit
+
+				p
+					label(for = 'dex') DEX
+					br
+					input#dex.form-control(type='text', name='dex', value=(undefined===dex ? '' : dex))
+
+				p
+					label(for = 'wis') WIS
+					br
+					input#wis.form-control(type='text', name='wis', value=(undefined===wis ? '' : wis))
+
+				p
+					label(for = 'con') CON
+					br
+					input#con.form-control(type='text', name='con', value=(undefined===con ? '' : con))
+
+				p
+					label(for = 'CHA') CHA
+					br
+					input#cha.form-control(type='text', name='cha', value=(undefined===cha ? '' : cha))
 
 		if errors 
 			ul
