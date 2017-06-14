@@ -104,8 +104,9 @@ app.get('/session/:sessionName/addCharacter', function (req, res) {
 	res.render('character_form', {actionUrl: "/session/" + sessionName + "/addCharacter"});
 });
 
+
 app.post('/session/:sessionName/addCharacter', function (req, res) {
-	req.checkBody('name', 'session name required. must be alphanumeric').notEmpty().isAlphanumeric();
+	req.checkBody('name', 'character name required. must be alphanumeric').notEmpty().isAlphanumeric();
 	req.checkBody('str', 'str required. must be an integer.').notEmpty().isInt();
 	req.checkBody('int', 'int required. must be an integer.').notEmpty().isInt();
 	req.checkBody('dex', 'dex required. must be an integer.').notEmpty().isInt();
@@ -151,8 +152,8 @@ app.post('/session/:sessionName/addCharacter', function (req, res) {
 	let basehp = req.body.basehp;
 
 	if(errors) {
-		res.render('character_form', {name: name, str: str, int: int, dex: dex, wis: wis, con: con, cha: cha, basehp: basehp
-			 errors: errors});
+		res.render('character_form', {name: name, str: str, int: int, dex: dex, wis: wis, con: con, cha: cha, basehp: basehp, 
+			errors: errors});
 		return;
 	}
 	else {
