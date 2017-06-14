@@ -33,7 +33,7 @@ exports.retrieveSessionByName = function (req, res) {
 	}
 }
 
-exports.createSession = function (req, res) {
+exports.createSessionPost = function (req, res) {
 	req.checkBody('name', 'session name required').notEmpty();
 
 	req.sanitize('name').escape();

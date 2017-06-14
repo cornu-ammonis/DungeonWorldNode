@@ -32,13 +32,14 @@ repo.persistPlayerCharacterToSession(test2, sessionTitle);
 // home page; includes links to creating and opening a session 
 app.get('/', controller.index);
 
+// displays characters present in session identified by :sessionName parameter
 app.get('/session/:sessionName', controller.retrieveSessionByName);
 
 app.get('/createSession', function (req, res) {
 	res.render('session_form', {title: "enter a name for your session"});
 });
 
-app.post('/createSession', controller.createSession);
+app.post('/createSession', controller.createSessionPost);
 
 app.get('/session/:sessionName/addCharacter', controller.addCharacterGet);
 
