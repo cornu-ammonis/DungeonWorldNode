@@ -11,7 +11,10 @@ html
 				input#name.form-control(type='text', name='name', value=(undefined===name ? '' : name))
 
 				label(for='str') STR:
-				input#name.form-control(type='text', name='str' value=(undefined===str ? '' : str))
+				input#str.form-control(type='text', name='str' value=(undefined===str ? '' : str))
+
+				label(for = 'int') INTL
+				intput#int.form-control(type='text', name='int', value=(undefined===int ? '' : int))
 			button.btn.btn-primary(type='submit') Submit
 
 		if errors 
