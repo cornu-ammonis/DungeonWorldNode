@@ -43,6 +43,12 @@ html
 					br
 					input#cha.form-control(type='text', name='cha', value=(undefined===cha ? '' : cha))
 
+				p 
+					label(for = 'basehp') Base Hp (your max hp is con plus this number)
+					br
+					input#basehp.form-control(type='text', name='basehp', value=(undefined===basehp ? '' : basehp))
+
+
 		if errors 
 			ul
 				for error in errors
