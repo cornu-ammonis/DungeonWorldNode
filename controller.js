@@ -1,6 +1,10 @@
 const repo = require('./repository');
 
 
+exports.seed = function () {
+	repo.seed();
+}
+
 // displays homepage
 exports.index = function (req, res) {
 	res.render("index", {title: "Dungeon World"});
