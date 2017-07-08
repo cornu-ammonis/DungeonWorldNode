@@ -7,7 +7,7 @@ function generateSessionsMap() {
 		let sessionNames = fs.readFileSync('./data/sessions.json');
 
 		for (var sessionName in sessionNames) {
-			let path = "./data/sessionrosters/" + sessionTitle + "/roster.json";
+			let path = "./data/sessionrosters/" + sessionName + "/roster.json";
 			sessionsMap[sessionName] = fs.readFileSync(path);
 		}
 	}
