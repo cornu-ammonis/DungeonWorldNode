@@ -1,5 +1,23 @@
 var fs = require('fs.extra');
 
+var sessionsMap = new Map();
+
+function generateSessionsMap() {
+	try {
+		let sessionNames = fs.readFileSync('./data/sessions.json');
+
+		for (var sessionName in sessionNames) {
+			let path = "./data/sessionrosters/" + sessionTitle + "/roster.json";
+			sessionsMap[sessionName] = fs.readFileSync(path);
+		}
+	}
+	catch (e) {
+		console.log('something went wrong in generateSessionsMap');
+		console.log (e.message);
+		console.log (e.stack);
+	}
+}
+
 function persistNewSessionName (name) {
 		let sessions = module.exports.retrieveSessionNames();
 
@@ -108,6 +126,15 @@ module.exports = {
 
 	tryAddNewSessionName: function(name) {
 		persistNewSessionName(name);
+	},
+
+	seed: function() {
+		if (fs.existsSync("./data/sessions.json")) {
+			generateSessionsMap();
+		}
+		else {
+			console.log('no sessions.json found - map is empty');
+		}
 	}
 	
 
