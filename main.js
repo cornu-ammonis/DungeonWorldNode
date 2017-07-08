@@ -26,6 +26,7 @@ app.use(expressValidator({
  }
 }));// Add this after the bodyParser middlewares!
 var controller = require('./controller.js');
+controller.seed();
 //let sessions = require('./data/sessions.json');
 
 /*
