@@ -1,3 +1,14 @@
+function persistNewSessionName (name) {
+		let sessions = module.exports.retrieveSessionNames();
+
+		sessions.push(name);
+
+		module.exports.fs.writeFileSync("./data/sessions.json", JSON.stringify(sessions));
+		module.exports.fs.mkdir('./data/sessionrosters/' + name + '/');
+}
+
+
+
 module.exports = {
 
 	fs: require('fs.extra'),
@@ -95,13 +106,9 @@ module.exports = {
 		return sessions;
 	}, 
 
-	persistNewSessionName: function (name) {
-		let sessions = this.retrieveSessionNames();
-
-		sessions.push(name);
-
-		this.fs.writeFileSync("./data/sessions.json", JSON.stringify(sessions));
-		this.fs.mkdir('./data/sessionrosters/' + name + '/');
+	tryAddNewSessionName: function(name) {
+		persistNewSessionName(name);
 	}
+	
 
 }

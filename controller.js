@@ -76,7 +76,7 @@ exports.createSessionPost = function (req, res) {
 			}
 		}
 
-		repo.persistNewSessionName(name);
+		repo.tryAddNewSessionName(name);
 		res.redirect('/session/' + name);
 
 	}
