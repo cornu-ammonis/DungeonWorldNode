@@ -104,7 +104,7 @@ module.exports = {
 	},
 
 
-	retrieveSessionNames: function () {
+	/* retrieveSessionNames: function () {
 
 		var sessions = [];
 		if (fs.existsSync("./data/sessions.json")) {
@@ -122,7 +122,11 @@ module.exports = {
 		}
 		
 		return sessions;
-	}, 
+	}, */
+
+	retrieveSesionNames: function() {
+		return sessionsMap.keys();
+	},
 
 	tryAddNewSessionName: function(name) {
 		persistNewSessionName(name);
