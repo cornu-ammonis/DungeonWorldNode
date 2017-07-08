@@ -130,7 +130,7 @@ module.exports = {
 		return sessions;
 	}, */
 
-	retrieveSesionNames: function() {
+	retrieveSessionNames: function() {
 		return sessionsMap.keys();
 	},
 
