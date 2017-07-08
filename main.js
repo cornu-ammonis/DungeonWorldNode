@@ -3,7 +3,7 @@
 const express = require('express');
 const app = express();
 const repo = require('./repository');
-var controller = require('./controller.js');
+
 app.set('view engine', 'pug');
 
 
@@ -14,8 +14,18 @@ var expressValidator = require('express-validator');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(expressValidator()); // Add this after the bodyParser middlewares!
-
+app.use(expressValidator({
+ customValidators: {
+    isArray: function(value) {
+        return Array.isArray(value);
+    },
+    isAlphanumericWithSpaces : function(value) {
+    	var re = /^[\w\-\s]+$/;
+    	return re.test(value);
+    }
+ }
+}));// Add this after the bodyParser middlewares!
+var controller = require('./controller.js');
 //let sessions = require('./data/sessions.json');
 
 /*
