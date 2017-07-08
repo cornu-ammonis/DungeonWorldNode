@@ -25,7 +25,7 @@ function generateSessionsMap() {
 }
 
 function persistNewSessionName (name) {
-		let sessions = module.exports.retrieveSessionNames();
+		let sessions = JSON.parse(fs.readFileSync('./data/sessions.json'));
 
 		sessions.push(name);
 
