@@ -4,11 +4,17 @@ var sessionsMap = new Map();
 
 function generateSessionsMap() {
 	try {
-		let sessionNames = fs.readFileSync('./data/sessions.json');
+		let sessionNames = JSON.parse(fs.readFileSync('./data/sessions.json'));
 
-		for (var sessionName in sessionNames) {
-			let path = "./data/sessionrosters/" + sessionName + "/roster.json";
-			sessionsMap[sessionName] = fs.readFileSync(path);
+		for (let i = 0; i < sessionNames.length; i++) {
+			let path = "./data/sessionrosters/" + sessionNames[i] + "/roster.json";
+			
+			if (fs.existsSync(path)){
+				sessionsMap[sessionNames[i]] = fs.readFileSync(path);
+			}
+			else {
+				sessionsMap[sessionNames[i]] = [];
+			}
 		}
 	}
 	catch (e) {
