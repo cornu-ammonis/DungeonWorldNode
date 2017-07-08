@@ -1,17 +1,17 @@
+var fs = require('fs.extra');
+
 function persistNewSessionName (name) {
 		let sessions = module.exports.retrieveSessionNames();
 
 		sessions.push(name);
 
-		module.exports.fs.writeFileSync("./data/sessions.json", JSON.stringify(sessions));
-		module.exports.fs.mkdir('./data/sessionrosters/' + name + '/');
+		fs.writeFileSync("./data/sessions.json", JSON.stringify(sessions));
+		fs.mkdir('./data/sessionrosters/' + name + '/');
 }
 
 
 
 module.exports = {
-
-	fs: require('fs.extra'),
 
 	// either adds the specified character to the roster, or if a character with the 
 	// same name already exists, updates that character, then persists changes. if roster
@@ -23,7 +23,7 @@ module.exports = {
 
 
 		let path = "./data/sessionrosters/" + sessionTitle + "/roster.json";
-		if (this.fs.existsSync(path)) {
+		if (fs.existsSync(path)) {
 			// load up current roster
 			try {
 				var characters = require("./data/sessionrosters/" + sessionTitle + "/roster.json");
@@ -58,7 +58,7 @@ module.exports = {
 		}
 		
 		// write to disc
-		this.fs.writeFileSync("./data/sessionrosters/" + sessionTitle + "/roster.json", JSON.stringify(characters));
+		fs.writeFileSync("./data/sessionrosters/" + sessionTitle + "/roster.json", JSON.stringify(characters));
 	},
 
 	// retrieves an array of pc objects by deserializing the json file 
@@ -71,7 +71,7 @@ module.exports = {
 		let path = "./data/sessionrosters/" + sessionTitle + "/roster.json";
 		let characters = []
 		
-		if (this.fs.existsSync(path)) {
+		if (fs.existsSync(path)) {
 			try {
 				characters = require(path);
 			}
@@ -89,7 +89,7 @@ module.exports = {
 	retrieveSessionNames: function () {
 
 		var sessions = [];
-		if (this.fs.existsSync("./data/sessions.json")) {
+		if (fs.existsSync("./data/sessions.json")) {
 
 			try {
 				sessions = require('./data/sessions.json');
